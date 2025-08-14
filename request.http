@@ -1,0 +1,22 @@
+
+
+POST http://localhost:3333/courses
+Content-Type:application/json
+
+{
+  "title": "Curso de React Native"
+}
+
+###
+
+GET http://localhost:3333/courses
+
+###
+GET http://localhost:3333/courses/1
+
+###
+
+DELETE  http://localhost:3333/courses/2
+
+
+
