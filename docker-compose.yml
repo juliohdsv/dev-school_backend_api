@@ -8,6 +8,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: devSchool
-    ports:
-      - "5432:5432"
+    ports: 
+     - "5432:5432"
 
