@@ -1,11 +1,15 @@
-import fastify from "fastify"; 
-import crypto  from "node:crypto";
-import { eq } from "drizzle-orm";
-import { db } from "./database/client.ts";
-import { courses } from "./database/schema.ts";
+import Fastify from "fastify"; 
+import { fastifySwagger } from "@fastify/swagger";
+import { fastifySwaggerUi } from "@fastify/swagger-ui";
+import { 
+  validatorCompiler, 
+  serializerCompiler, 
+  type ZodTypeProvider,
+  jsonSchemaTransform 
+} from "fastify-type-provider-zod";
 
-export const app = fastify({
-   logger: {
+export const fastify = Fastify({
+  logger: {
     transport: {
       target: "pino-pretty",
       options: {
@@ -14,58 +18,24 @@ export const app = fastify({
       }
     }
   }
+}).withTypeProvider<ZodTypeProvider>();
+
+fastify.register(fastifySwagger),{
+  openapi: {
+    info: {
+      title: "Dev School",
+      version: "1.0.0",
+    }
+  },
+  transform: jsonSchemaTransform,
+};
+
+fastify.register(fastifySwaggerUi, {
+  routePrefix: "/docs"
 });
 
+fastify.setSerializerCompiler(serializerCompiler);
+fastify.setValidatorCompiler(validatorCompiler);
 
-app.get("/courses", async (request, reply)=>{
-  const result = await db.select().from(courses);
-  
-  return reply.status(200).send({ courses: result });
-})
 
-app.get("/courses/:id", async (request, reply)=>{
-  const { id } = request.params as any;
-  const result = await db
-    .select({
-      title: courses.title,
-      description: courses.description
-    })
-    .from(courses)
-    .where(eq(courses.id, id))
 
-  if(!result){
-    return reply.status(404).send();  
-  }
-
-  return reply.status(404).send({ result });
-})
-
-app.post("/courses", async (request, reply)=>{
-
-  type Body = {
-    title: string;
-    description: string;
-  }
-
-  const { title, description } = request.body as Body;
-  const id: any = crypto.randomUUID();
-
-  if(!title){
-    return reply.status(400).send();
-  }
-
-  const result = await db
-    .insert(courses)
-    .values({ title, description })
-    .returning()
-
-  return reply.status(201).send({ courseId: result[0].id });
-})
-
-app.delete("/courses/:id", async (request, reply)=>{
-
-  const { id } = request.params as any;
-  await db.delete(courses).where(eq(courses.id, id));
-
-  return reply.status(200).send();
-})
