@@ -7,8 +7,12 @@ import {
   type ZodTypeProvider,
   jsonSchemaTransform 
 } from "fastify-type-provider-zod";
+import { createCourseRoute } from "./routes/create-course.ts";
+import { getCourseByIdRoute } from "./routes/get-course-by-id.ts";
+import { getCoursesRoute } from "./routes/get-courses.ts";
+import { deleteCourseByIdRoute } from "./routes/delete-course-by-id.ts";
 
-export const fastify = Fastify({
+const fastify = Fastify({
   logger: {
     transport: {
       target: "pino-pretty",
@@ -20,7 +24,7 @@ export const fastify = Fastify({
   }
 }).withTypeProvider<ZodTypeProvider>();
 
-fastify.register(fastifySwagger),{
+fastify.register(fastifySwagger,{
   openapi: {
     info: {
       title: "Dev School",
@@ -28,14 +32,18 @@ fastify.register(fastifySwagger),{
     }
   },
   transform: jsonSchemaTransform,
-};
+});
 
 fastify.register(fastifySwaggerUi, {
   routePrefix: "/docs"
 });
 
-fastify.setSerializerCompiler(serializerCompiler);
-fastify.setValidatorCompiler(validatorCompiler);
+fastify.setValidatorCompiler(validatorCompiler)
+fastify.setSerializerCompiler(serializerCompiler)
 
+fastify.register(getCourseByIdRoute);
+fastify.register(getCoursesRoute);
+fastify.register(createCourseRoute);
+fastify.register(deleteCourseByIdRoute);
 
-
+export { fastify }

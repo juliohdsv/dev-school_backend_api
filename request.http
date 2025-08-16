@@ -4,20 +4,20 @@ POST http://localhost:3333/courses
 Content-Type:application/json
 
 {
-  "title": "Curso de Node.js",
+  "title": "Curso de React",
   "description": "Cadastrei meu curso"
 }
 
 ###
 
-GET http://localhost:3333/courses
+GET http://localhost:3333/courses?search=Docker
 
 ###
-GET http://localhost:3333/courses/ed4ee337-b8d5-4730-8d41-d09d8a2a1012
+GET http://localhost:3333/courses/3172adb4-4100-4755-b703-3f7a9287da2b
 
 ###
 
-DELETE  http://localhost:3333/courses/1
+DELETE  http://localhost:3333/courses/cabddc02-5076-4bb7-ba75-7ab54ae1ad76
 
 
 

@@ -1,7 +1,7 @@
 {
   "name": "devshool",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "node --env-file .env --watch src/server.ts",
     "db:seed": "node --env-file .env src/database/seed.ts",
