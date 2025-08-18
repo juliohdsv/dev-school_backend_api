@@ -25,7 +25,7 @@ PUT http://localhost:3333/courses/bf16eaea-6932-41e8-82b8-a82a675e2360
 Content-Type:application/json
 
 {
-  "title": "Curso de Firebase",
-  "description": "Cadastrei meu curso"
+  "title": "Curso de C++",
+  "description": "Cadastrei meu curso C++"
 } 
 
