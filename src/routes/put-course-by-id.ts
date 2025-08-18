@@ -4,32 +4,37 @@ import { z } from "zod";
 import { db } from "../database/client.ts";
 import { courses } from "../database/schema.ts";
 
-export const getCourseByIdRoute: FastifyPluginAsyncZod = async(app) =>{
-  app.get("/courses/:id", {
+export const putCourseByIdRoute: FastifyPluginAsyncZod = async(app) =>{
+  app.put("/courses/:id", {
     schema: {
       tags: ["courses"],
-      summary: "Get a course",
-      description: "Get a course with received id",
+      summary: "update a course",
+      description: "Update a course information",
       params: z.object({
         id: z.uuid(),
       }),
+      body: z.object({
+        title: z.string().min(5),
+        description: z.string().min(5),
+      })
     },
   }, async (request, reply)=> {
 
     const { id } = request.params; 
-    const result = await db
-      .select({
-        title: courses.title,
-        description: courses.description
+    const { title, description } = request.body;
+    const result = await db.update(courses)
+      .set({
+        title,
+        description,
       })
-      .from(courses)
       .where(eq(courses.id, id))
+      .returning()
       
     if(!result){
       return reply.status(404).send();  
     }
 
-    return reply.status(404).send({ result });
+    return reply.status(404).send({ course: result });
   })
 }
 

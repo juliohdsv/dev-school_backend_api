@@ -7,6 +7,9 @@ export const createCourseRoute: FastifyPluginAsyncZod = async(app) =>{
 
   app.post("/courses", {
     schema: {
+      tags: ["courses"],
+      summary: "Create a course",
+      description: "Receive a title and create the new course in the database",
       body: z.object({
         title: z.string().min(5,"Title required minimun of 5 cahracters"),
         description: z.string().min(5, "Description required minimun of 5 cahracters"),

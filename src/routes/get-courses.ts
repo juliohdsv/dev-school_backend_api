@@ -7,6 +7,9 @@ import { ilike, asc } from "drizzle-orm";
 export const getCoursesRoute: FastifyPluginAsyncZod = async(app)=> {
   app.get("/courses", {
     schema: {
+      tags: ["courses"],
+      summary: "Get a courses",
+      description: "Get all courses",
       querystring: z.object({
         search: z.string().optional(),
         oderBy: z.string().optional(),

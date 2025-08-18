@@ -8,6 +8,9 @@ export const deleteCourseByIdRoute: FastifyPluginAsyncZod = async(app)=> {
   
   app.delete("/courses/:id", {
     schema: {
+      tags: ["courses"],
+      summary: "Delete a course",
+      description: "Receive a id and delete the course in the database",
       params: z.object({
         id: z.uuid(),
       }),
