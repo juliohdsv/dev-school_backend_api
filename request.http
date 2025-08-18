@@ -10,7 +10,7 @@ Content-Type:application/json
 
 ###
 
-GET http://localhost:3333/courses?search=Docker
+GET http://localhost:3333/courses?search=re?page=1
 
 ###
 GET http://localhost:3333/courses/3172adb4-4100-4755-b703-3f7a9287da2b
