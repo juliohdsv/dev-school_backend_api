@@ -10,10 +10,10 @@ Content-Type:application/json
 
 ###
 
-GET http://localhost:3333/courses?search=re?page=1
+GET http://localhost:3333/courses?page=1
 
 ###
-GET http://localhost:3333/courses/3172adb4-4100-4755-b703-3f7a9287da2b
+GET http://localhost:3333/courses/dd80de97-01ba-48a2-adb9-ad05b2b1fc08
 
 ###
 
@@ -29,3 +29,12 @@ Content-Type:application/json
   "description": "Cadastrei meu curso C++"
 } 
 
+###
+
+POST http://localhost:3333/sessions
+Content-Type: application/json
+
+{
+  "email": "Daniel81@yahoo.com",
+  "password": "123456"
+}

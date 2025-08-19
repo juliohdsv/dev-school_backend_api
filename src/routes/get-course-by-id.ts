@@ -13,23 +13,30 @@ export const getCourseByIdRoute: FastifyPluginAsyncZod = async(app) =>{
       params: z.object({
         id: z.uuid(),
       }),
+      response: {
+        200: z.object({
+          course: z.object({
+            id: z.uuid(),
+            title: z.string(),
+            description: z.string().nullable(),
+          }),
+        }),
+        404: z.null().describe('Course not found'),
+      }
     },
   }, async (request, reply)=> {
 
-    const { id } = request.params; 
+    const courseId = request.params.id
+  
     const result = await db
-      .select({
-        title: courses.title,
-        description: courses.description
-      })
+      .select()
       .from(courses)
-      .where(eq(courses.id, id))
-      
-    if(!result){
-      return reply.status(404).send();  
+      .where(eq(courses.id, courseId))
+  
+    if (result.length > 0) {
+      return { course: result[0] }
     }
-
-    return reply.status(404).send({ result });
+  
+    return reply.status(404).send()
   })
 }
-

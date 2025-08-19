@@ -14,6 +14,9 @@ export const createCourseRoute: FastifyPluginAsyncZod = async(app) =>{
         title: z.string().min(5,"Title required minimun of 5 cahracters"),
         description: z.string().min(5, "Description required minimun of 5 cahracters"),
       }),
+      response: {
+        201: z.object({ courseId: z.uuid() }).describe("Created user successfully")
+      }
     }
   }, async (request, reply)=>{
   

@@ -20,9 +20,9 @@ export const deleteCourseByIdRoute: FastifyPluginAsyncZod = async(app)=> {
     const { id } = request.params as any;
     await db
       .delete(courses)
-      .where(eq(courses.id, id));
+      .where(eq(courses.id, id))
 
-    return reply.status(200).send();
+    return reply.status(200).send({ message: "Course deleted successfully" });
   })
 }
 

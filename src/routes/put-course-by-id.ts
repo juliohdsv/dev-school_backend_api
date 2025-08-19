@@ -3,7 +3,7 @@ import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { db } from "../database/client.ts";
 import { courses } from "../database/schema.ts";
-import { error } from "console";
+
 
 export const putCourseByIdRoute: FastifyPluginAsyncZod = async(app) =>{
   app.put("/courses/:id", {

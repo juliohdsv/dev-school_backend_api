@@ -51,7 +51,8 @@ export const getCoursesRoute: FastifyPluginAsyncZod = async(app)=> {
         .limit(10)
         .where(and(...conditions))
         .groupBy(courses.id),
-      db.$count(courses, and(...conditions))
+      db
+        .$count(courses, and(...conditions))
     ])
       
     return reply.status(200).send({ courses: result, total });

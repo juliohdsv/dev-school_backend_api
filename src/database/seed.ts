@@ -19,7 +19,7 @@ async function seed(){
     { title: "React Native" },
     { title: "Node.js" },
     { title: "FullStack" },
-    { title: "SQL Server" },
+    { title: "SQL Server" }
   ]).returning()
 
   await db.insert(enrollments).values([
